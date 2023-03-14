@@ -1,3 +1,6 @@
+import random
+import string
+
 class Question:
     def __init__(self, title, code):
         self.title = title
@@ -5,6 +8,7 @@ class Question:
 
 
 data = {
+    "metadata": random.choices(string.ascii_letters),
     "main_file_name": "",
     "frq_file_name": "",
     "tt_file_name": "",

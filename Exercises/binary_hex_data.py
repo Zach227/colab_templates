@@ -1,10 +1,15 @@
+import random
+import string
+
 class Question:
     def __init__(self, title, code):
         self.title = title
         self.code = code
 
+id = ''.join(random.choices(string.ascii_letters, k=12))
 
 data = {
+    "metadata": id,
     "main_file_name": "binary_hex",
     "frq_file_name": "frqBH",
     "intro_title": "Number Systems",
