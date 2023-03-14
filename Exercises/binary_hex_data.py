@@ -1,15 +1,14 @@
-import random
-import string
+import secrets
 
 class Question:
     def __init__(self, title, code):
         self.title = title
         self.code = code
 
-id = ''.join(random.choices(string.ascii_letters, k=12))
+hash = secrets.token_hex(32)
 
 data = {
-    "metadata": id,
+    "hash": hash,
     "main_file_name": "binary_hex",
     "frq_file_name": "frqBH",
     "intro_title": "Number Systems",
