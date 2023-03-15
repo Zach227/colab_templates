@@ -50,9 +50,9 @@ width="250" height="" style="display: block; margin: 0 auto" />
 
 NOT: The output is alwasys the oposite of the input. 
     """,
-    "section1_quiz_title": "Fill out the truth tables below",
+    "section1_quiz_title": "Practice",
     "section1_questions": [
-        Question(["Fill out the truth tables below"], ["print_tt_grid(1)", "print()", "print_tt_grid(2)", "print()", "print_tt_grid(3)"])
+        Question(["#@markdown Fill out the truth tables below"], ["print_tt_grid(1)", "print()", "print_tt_grid(2)", "print()", "print_tt_grid(3)"])
     ],
     "section2_exists": True,
     "section2_title": "NAND, NOR, XOR, XNOR",
@@ -94,9 +94,9 @@ width="250" height="" style="display: block; margin: 0 auto" />
 XNOR gates are XOR gates but the ouput is inverted. The oupt is 1 if an even number of inputs are the same. 
 
         """,
-    "section2_quiz_title": "Try filling out the truth tables for these new gates",
+    "section2_quiz_title": "Practice",
     "section2_questions": [
-        Question(["Fill out the truth tables below"], ["print_tt_grid(4)", "print()", "print_tt_grid(5)", "print()", "print_tt_grid(6)", "print()", "print_tt_grid(7)"])
+        Question(["#@markdown Fill out the truth tables below"], ["print_tt_grid(4)", "print()", "print_tt_grid(5)", "print()", "print_tt_grid(6)", "print()", "print_tt_grid(7)"])
     ],
     "section3_exists": True,
     "section3_title": "Complex Diagrams",
