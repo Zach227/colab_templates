@@ -26,6 +26,7 @@ for root, dirs, files in os.walk(dir_path):
                     for key in python_dict["cells"]:
                         
                         if(not i or i == 1 ):
+                            #Rewrite the setup block so that the first cell and setup cells are combined.
                             #Set up the setup block
                             #Add the setups every notebook uses
                             #Make it one block
@@ -37,6 +38,9 @@ for root, dirs, files in os.walk(dir_path):
                         else if python_dict["cells"][i]["source"].find("import ") is not -1:
                                 raise Exception("Invalid Import found in " +str(i+1) + " cell.\n Imports are only valid in the first and second cell\n")    
                         else:
+                            #Skip the setup
+                            #First block in array will be a Intro block
+                            #Title then followed by Markdown
                             source_list.append(
                                 (
                                     python_dict["cells"][i]["cell_type"],
