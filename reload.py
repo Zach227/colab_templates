@@ -11,6 +11,7 @@ for root, dirs, files in os.walk(dir_path):
     for file_name in files:
         # check if the file is a json file
         if file_name.endswith(".ipynb"):
+            notebook_name = file_name[0:-6]
             # construct the full path to the file
             file_path = os.path.join(root, file_name)
             # read the json data from the file into a string
@@ -20,50 +21,37 @@ for root, dirs, files in os.walk(dir_path):
                     # parse the json string into a Python object
                     python_dict = json.loads(json_str)
                     # do something with the json data
-                    # print(json_data)
-                    i = 0
-                    import_list = set()
-                    source_list = []
-                    skip = []
+                    i = 0  # position in array of cells
+                    import_list = set()  # Set of packages to import using import_text()
+                    source_list = []  # List of the contents of the relevant blocks
+                    skip = []  # Lines to skip?
                     for key in python_dict["cells"]:
-                        import_exists = False
-
-                        # Check for import(
+                        skipping = False  # If there is an import in a block of code, we don't want to duplicate it
+                        # Check for import_text(
                         for line in python_dict["cells"][i]["source"]:
-                            # print(line)
+                            # If the current object isn't a string, skip it
                             if type(line) != str:
                                 continue
-                            # if line.find("import(") != -1 and (i > 2):
-                            #     import_exists = True
-                            # print("Import exists ", line)
-                            if len(line) > 15 and line.find("import_text") != -1:
+                            if (
+                                len(line) > 15 and line.find("import_text") != -1
+                            ):  # Only check it if its long enough to contain an import text
                                 x = line.find("(")
                                 y = line.find(")")
-                                # import_exists = True
-                                print(line[x + 2 : y - 1])
                                 if line[x + 1] == '"' and line[y - 1] == '"':
-                                    print(line[13:-4])
-                                    import_list.add(line[x + 2 : y - 1])
+                                    import_list.add(line[x + 2 : y - 4])
                                     print(import_list)
                                     skip.append(i)
+                                    skipping = True
                                 print("Import exists ", line)
-
-                        if not i or i == 1:
-                            # Rewrite the setup block so that the first cell and setup cells are combined.
-                            # Set up the setup block
-                            # Add the setups every notebook uses
-                            # Make it one block
-                            # Add in template to close the first setup block
-                            # Errors to catch/Things to change
-                            # Everything needs a title, if it doesn't have a title, add one. (Code block)
-                            # Resize the first  to have consistent sizing (Markdown )
-                            #
+                            if line.find("**Setup**") != -1:
+                                print("SKIPPING " + line)
+                                skipping = True
+                            if line.find("from ipywidgets") != -1:
+                                print("SKIPPING " + line)
+                                skipping = True
+                        if skipping is True:
+                            skipping = False
                             pass
-                        elif import_exists is True:
-                            raise Exception(
-                                "Invalid Import found in "
-                                + " cell.\n Imports are only valid in the first and second cell\n"
-                            )
                         else:
                             # Skip the setup
                             # First block in array will be a Intro block
@@ -95,7 +83,9 @@ for root, dirs, files in os.walk(dir_path):
                             else:
                                 tempLine = line
                             cell_string += (
-                                '"' + tempLine.replace("\\", "\\\\").replace('"', '\\"') + '",'
+                                '"'
+                                + tempLine.replace("\\", "\\\\").replace('"', '\\"')
+                                + '",'
                             )
                         if cell_string and cell_string[-1] == ",":
                             cell_string = cell_string[:-1]
@@ -104,7 +94,11 @@ for root, dirs, files in os.walk(dir_path):
                     import_list = list(import_list)
                     environment = Environment(loader=FileSystemLoader("templates/"))
                     template = environment.get_template("cell.txt")
-                    content = template.render(cells=cells, import_list=import_list)
+                    content = template.render(
+                        cells=cells,
+                        import_list=import_list,
+                        notebook_name=notebook_name,
+                    )
                     filename = "/home/wms29/testing/notebook/" + file_name
                     directory = "/home/wms29/testing/notebook"
                     filename = file_name
