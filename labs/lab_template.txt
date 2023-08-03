@@ -1,0 +1,819 @@
+{
+  "cells": [
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "SNHwhR5ed9Da"
+      },
+      "source": [
+        "## **Setup**\n",
+        "Click the Play Button. No need to expand. Do not touch this.\n",
+        "<details><summary>Packages to be downloaded</summary>\n",
+        "Things it needs to install:  <br>\n",
+        "\n",
+        " *    Verilator- the simulator  <br>\n",
+        " *    VCD - Generates waveforms from `.vcd` files  <br>\n",
+        " *    Widgets - Each widget must first be generated then will be loaded when played\n",
+        "</details>"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "cellView": "form",
+        "id": "9coZGYriFDAb"
+      },
+      "outputs": [],
+      "source": [
+        "#@title Setup\n",
+        "!cd /content\n",
+        "!git clone https://github.com/yne/vcd.git\n",
+        "!make -C /content/vcd\n",
+        "%cd /content/vcd\n",
+        "!make install\n",
+        "%cd /\n",
+        "import ipywidgets as widgets\n",
+        "from ipywidgets import GridspecLayout\n",
+        "from ipywidgets import AppLayout, Button, Layout, jslink, IntText, IntSlider\n",
+        "import requests\n",
+        "\n",
+        "!mkdir -p /content/tmp_code\n",
+        "#Creates a text document using the Raw github url. This text document will be used as a .py file for imports\n",
+        "def import_text(text):\n",
+        "  url = \"https://raw.githubusercontent.com/byuccl/digital_design_colab/master/Labs/{{ notebook_dir }}/files/%s\" % text\n",
+        "  resp = requests.get(url)\n",
+        "  with open(text, 'wb') as f:\n",
+        "    f.write(resp.content)\n",
+        "\n",
+        "import_text(\"import_all.py\")\n",
+        "from import_all import *\n",
+        "import_source()\n",
+        "import_packages()\n",
+        "from simulation import *\n",
+        "from vcd2wd import *\n",
+        "!apt-get install verilator >/dev/null\n",
+        "!pip install --upgrade git+https://github.com/anon36424/nb_js_diagrammers.git\n",
+        "%load_ext nb_js_diagrammers"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "aM9GnrFnlImY"
+      },
+      "source": [
+        "## {{ intro_title }}\n",
+        {% for sentence in intro_body %}
+          "{{ sentence }}",
+        {% endfor %}
+        "{{ empty }}"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "Q1Kd2xpYqUfL"
+      },
+      "source": [
+        "### {{ part1_title }}\n",
+        {% for sentence in part1_body %}
+            "{{ sentence }}",
+        {% endfor %}
+        "{{ empty }}"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "cellView": "form",
+        "id": "nMT-jR_7tBxu"
+      },
+      "outputs": [],
+      "source": [
+        "#@title Launch Simulation Workspace\n",
+        "createSimulationWorkSpace(\"tmp_code/{{ part1_sim_file }}\")"
+      ]
+    },
+    {% if part1_wavedrom %}
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "cellView": "form",
+        "id": "LsBCxFSVBFCB"
+      },
+      "outputs": [],
+      "source": [
+        "#@title Create WaveDrom\n",
+        "df2wd(\"{{ part1_sim_file }}\")"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "cellView": "form",
+        "id": "Nf4o3jwNA86t"
+      },
+      "outputs": [],
+      "source": [
+        "#@title Show WaveDrom\n",
+        "%%wavedrom_magic -h 200 -o /content/tmp_code/{{ part1_sim_file }}.txt\n",
+        "---"
+      ]
+    },
+    {% endif %}
+    {% if part1_testbench %}
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "cellView": "form",
+        "id": "FpOHuLeJe6IC"
+      },
+      "outputs": [],
+      "source": [
+        "#@title Verilator TestBench\n",
+        "!verilator --cc {{ part1_sim_file }}.sv\n",
+        "!verilator -Wall --trace -cc {{ part1_sim_file }}.sv --exe tb_{{ part1_sim_file }}.cpp\n",
+        "!make -C obj_dir -f V{{ part1_sim_file }}.mk V{{ part1_sim_file }} > /dev/null\n",
+        "!./obj_dir/V{{ part1_sim_file }}"
+      ]
+    },
+    {% endif %}
+    {% if part2_exists %}
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "Q1Kd2xpYqUfL"
+      },
+      "source": [
+        "### {{ part2_title }}\n",
+        {% for sentence in part2_body %}
+            "{{ sentence }}",
+        {% endfor %}
+        "{{ empty }}"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "cellView": "form",
+        "id": "nMT-jR_7tBxu"
+      },
+      "outputs": [],
+      "source": [
+        "#@title Launch Simulation Workspace\n",
+        "createSimulationWorkSpace(\"tmp_code/{{ part2_sim_file }}\")"
+      ]
+    },
+    {% if part2_wavedrom %}
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "cellView": "form",
+        "id": "LsBCxFSVBFCB"
+      },
+      "outputs": [],
+      "source": [
+        "#@title Create WaveDrom\n",
+        "df2wd(\"{{ part2_sim_file }}\")"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "cellView": "form",
+        "id": "Nf4o3jwNA86t"
+      },
+      "outputs": [],
+      "source": [
+        "#@title Show WaveDrom\n",
+        "%%wavedrom_magic -h 200 -o /content/tmp_code/{{ part2_sim_file }}.txt\n",
+        "---"
+      ]
+    },
+    {% endif %}
+    {% if part2_testbench %}
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "cellView": "form",
+        "id": "FpOHuLeJe6IC"
+      },
+      "outputs": [],
+      "source": [
+        "#@title Verilator TestBench\n",
+        "!verilator --cc {{ part2_sim_file }}.sv\n",
+        "!verilator -Wall --trace -cc {{ part2_sim_file }}.sv --exe tb_{{ part2_sim_file }}.cpp\n",
+        "!make -C obj_dir -f V{{ part2_sim_file }}.mk V{{ part2_sim_file }} > /dev/null\n",
+        "!./obj_dir/V{{ part2_sim_file }}"
+      ]
+    },
+    {% endif %}
+    {% endif %}
+    {% if part3_exists %}
+    {
+      "cell_type": "markdown",
+      "metadata": {
+      "id": "Q1Kd2xpYqUfL"
+      },
+      "source": [
+        "### {{ part3_title }}\n",
+        {% for sentence in part3_body %}
+            "{{ sentence }}",
+        {% endfor %}
+        "{{ empty }}"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "cellView": "form",
+        "id": "nMT-jR_7tBxu"
+      },
+      "outputs": [],
+      "source": [
+        "#@title Launch Simulation Workspace\n",
+        "createSimulationWorkSpace(\"tmp_code/{{ part3_sim_file }}\")"
+      ]
+    },
+    {% if part3_wavedrom %}
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "cellView": "form",
+        "id": "LsBCxFSVBFCB"
+      },
+      "outputs": [],
+      "source": [
+        "#@title Create WaveDrom\n",
+        "df2wd(\"{{ part3_sim_file }}\")"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "cellView": "form",
+        "id": "Nf4o3jwNA86t"
+      },
+      "outputs": [],
+      "source": [
+        "#@title Show WaveDrom\n",
+        "%%wavedrom_magic -h 200 -o /content/tmp_code/{{ part3_sim_file }}.txt\n",
+        "---"
+      ]
+    },
+    {% endif %}
+    {% if part3_testbench %}
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "cellView": "form",
+        "id": "FpOHuLeJe6IC"
+      },
+      "outputs": [],
+      "source": [
+        "#@title Verilator TestBench\n",
+        "!verilator --cc {{ part3_sim_file }}.sv\n",
+        "!verilator -Wall --trace -cc {{ part3_sim_file }}.sv --exe tb_{{ part3_sim_file }}.cpp\n",
+        "!make -C obj_dir -f V{{ part3_sim_file }}.mk V{{ part3_sim_file }} > /dev/null\n",
+        "!./obj_dir/V{{ part3_sim_file }}"
+      ]
+    },
+    {% endif %}
+    {% endif %}
+    {% if part4_exists %}
+    {
+      "cell_type": "markdown",
+      "metadata": {
+      "id": "Q1Kd2xpYqUfL"
+      },
+      "source": [
+        "### {{ part4_title }}\n",
+        {% for sentence in part4_body %}
+            "{{ sentence }}",
+        {% endfor %}
+        "{{ empty }}"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "cellView": "form",
+        "id": "nMT-jR_7tBxu"
+      },
+      "outputs": [],
+      "source": [
+        "#@title Launch Simulation Workspace\n",
+        "createSimulationWorkSpace(\"tmp_code/{{ part4_sim_file }}\")"
+      ]
+    },
+    {% if part4_wavedrom %}
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "cellView": "form",
+        "id": "LsBCxFSVBFCB"
+      },
+      "outputs": [],
+      "source": [
+        "#@title Create WaveDrom\n",
+        "df2wd(\"{{ part4_sim_file }}\")"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "cellView": "form",
+        "id": "Nf4o3jwNA86t"
+      },
+      "outputs": [],
+      "source": [
+        "#@title Show WaveDrom\n",
+        "%%wavedrom_magic -h 200 -o /content/tmp_code/{{ part4_sim_file }}.txt\n",
+        "---"
+      ]
+    },
+    {% endif %}
+    {% if part4_testbench %}
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "cellView": "form",
+        "id": "FpOHuLeJe6IC"
+      },
+      "outputs": [],
+      "source": [
+        "#@title Verilator TestBench\n",
+        "!verilator --cc {{ part4_sim_file }}.sv\n",
+        "!verilator -Wall --trace -cc {{ part4_sim_file }}.sv --exe tb_{{ part4_sim_file }}.cpp\n",
+        "!make -C obj_dir -f V{{ part4_sim_file }}.mk V{{ part4_sim_file }} > /dev/null\n",
+        "!./obj_dir/V{{ part4_sim_file }}"
+      ]
+    },
+    {% endif %}
+    {% endif %}
+    {
+      "cell_type": "markdown",
+      "metadata": {
+      "id": "Q1Kd2xpYqUfL"
+      },
+      "source": [
+        "### {{ top_module_title }}\n",
+        {% for sentence in top_module_body %}
+            "{{ sentence }}",
+        {% endfor %}
+        "{{ empty }}"
+      ]
+    },
+    {% if top_module_text2 %}
+    {
+      "cell_type": "{{ top_module_text2_type }}",
+      "metadata": {
+      "id": "Q1Kd2xpYqUfL"
+      },
+      "source": [
+        "### {{ top_module_title2 }}\n",
+        {% for sentence in top_module_body2 %}
+            "{{ sentence }}",
+        {% endfor %}
+        "{{ empty }}"
+      ]
+    },
+    {% endif %}
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "cellView": "form",
+        "id": "nMT-jR_7tBxu"
+      },
+      "outputs": [],
+      "source": [
+        "#@title Launch Simulation Workspace\n",
+        "createSimulationWorkSpace(\"tmp_code/{{ top_module_sim_file }}\")"
+      ]
+    },
+    {% if top_module_wavedrom %}
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "cellView": "form",
+        "id": "LsBCxFSVBFCB"
+      },
+      "outputs": [],
+      "source": [
+        "#@title Create WaveDrom\n",
+        "df2wd(\"{{ top_module_sim_file }}\")"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "cellView": "form",
+        "id": "Nf4o3jwNA86t"
+      },
+      "outputs": [],
+      "source": [
+        "#@title Show WaveDrom\n",
+        "%%wavedrom_magic -h 200 -o /content/tmp_code/{{ top_module_sim_file }}.txt\n",
+        "---"
+      ]
+    },
+    {% endif %}
+    {% if top_module_testbench %}
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "cellView": "form",
+        "id": "FpOHuLeJe6IC"
+      },
+      "outputs": [],
+      "source": [
+        "#@title Verilator TestBench\n",
+        "!verilator --cc {{ top_module_sim_file }}.sv\n",
+        "!verilator -Wall --trace -cc {{ top_module_sim_file }}.sv --exe tb_{{ top_module_sim_file }}.cpp\n",
+        "!make -C obj_dir -f V{{ top_module_sim_file }}.mk V{{ top_module_sim_file }} > /dev/null\n",
+        "!./obj_dir/V{{ top_module_sim_file }}"
+      ]
+    },
+    {% endif %}
+    {% if xdc_exists %}
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "BoUoInjG-U4q"
+      },
+      "source": [
+        "### {{ xdc_title }}\n",
+        {% for sentence in xdc_body %}
+            "{{ sentence }}",
+        {% endfor %}
+        "{{ empty }}"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "cellView": "form",
+        "id": "LK5-Msjq05GW"
+      },
+      "outputs": [],
+      "source": [
+        "#@title Generate an XDC File\n",
+        "%%bash -c 'cat > /content/tmp_code/xdc.xdc'\n",
+        "\n",
+        "## Buttons\n",
+        "# set_property -dict { PACKAGE_PIN U18   IOSTANDARD LVCMOS33 } [get_ports { btnc }];\n",
+        "# set_property -dict { PACKAGE_PIN T18   IOSTANDARD LVCMOS33 } [get_ports { btnu }];\n",
+        "# set_property -dict { PACKAGE_PIN W19   IOSTANDARD LVCMOS33 } [get_ports { btnl }];\n",
+        "# set_property -dict { PACKAGE_PIN T17   IOSTANDARD LVCMOS33 } [get_ports { btnr }];\n",
+        "# set_property -dict { PACKAGE_PIN U17   IOSTANDARD LVCMOS33 } [get_ports { btnd }];\n",
+        "\n",
+        "## Switches\n",
+        "# set_property -dict { PACKAGE_PIN V17   IOSTANDARD LVCMOS33 } [get_ports { sw[0] }];\n",
+        "# set_property -dict { PACKAGE_PIN V16   IOSTANDARD LVCMOS33 } [get_ports { sw[1] }];\n",
+        "# set_property -dict { PACKAGE_PIN W16   IOSTANDARD LVCMOS33 } [get_ports { sw[2] }];\n",
+        "# set_property -dict { PACKAGE_PIN W17   IOSTANDARD LVCMOS33 } [get_ports { sw[3] }];\n",
+        "# set_property -dict { PACKAGE_PIN W15   IOSTANDARD LVCMOS33 } [get_ports { sw[4] }];\n",
+        "# set_property -dict { PACKAGE_PIN V15   IOSTANDARD LVCMOS33 } [get_ports { sw[5] }];\n",
+        "# set_property -dict { PACKAGE_PIN W14   IOSTANDARD LVCMOS33 } [get_ports { sw[6] }];\n",
+        "# set_property -dict { PACKAGE_PIN W13   IOSTANDARD LVCMOS33 } [get_ports { sw[7] }];\n",
+        "# set_property -dict { PACKAGE_PIN V2    IOSTANDARD LVCMOS33 } [get_ports { sw[8] }];\n",
+        "# set_property -dict { PACKAGE_PIN T3    IOSTANDARD LVCMOS33 } [get_ports { sw[9] }];\n",
+        "# set_property -dict { PACKAGE_PIN T2    IOSTANDARD LVCMOS33 } [get_ports { sw[10] }];\n",
+        "# set_property -dict { PACKAGE_PIN R3    IOSTANDARD LVCMOS33 } [get_ports { sw[11] }];\n",
+        "# set_property -dict { PACKAGE_PIN W2    IOSTANDARD LVCMOS33 } [get_ports { sw[12] }];\n",
+        "# set_property -dict { PACKAGE_PIN U1    IOSTANDARD LVCMOS33 } [get_ports { sw[13] }];\n",
+        "# set_property -dict { PACKAGE_PIN T1    IOSTANDARD LVCMOS33 } [get_ports { sw[14] }];\n",
+        "# set_property -dict { PACKAGE_PIN R2    IOSTANDARD LVCMOS33 } [get_ports { sw[15] }];\n",
+        "\n",
+        "## LEDs\n",
+        "# set_property -dict { PACKAGE_PIN U16   IOSTANDARD LVCMOS33 } [get_ports { led[0] }];\n",
+        "# set_property -dict { PACKAGE_PIN E19   IOSTANDARD LVCMOS33 } [get_ports { led[1] }];\n",
+        "# set_property -dict { PACKAGE_PIN U19   IOSTANDARD LVCMOS33 } [get_ports { led[2] }];\n",
+        "# set_property -dict { PACKAGE_PIN V19   IOSTANDARD LVCMOS33 } [get_ports { led[3] }];\n",
+        "# set_property -dict { PACKAGE_PIN W18   IOSTANDARD LVCMOS33 } [get_ports { led[4] }];\n",
+        "# set_property -dict { PACKAGE_PIN U15   IOSTANDARD LVCMOS33 } [get_ports { led[5] }];\n",
+        "# set_property -dict { PACKAGE_PIN U14   IOSTANDARD LVCMOS33 } [get_ports { led[6] }];\n",
+        "# set_property -dict { PACKAGE_PIN V14   IOSTANDARD LVCMOS33 } [get_ports { led[7] }];\n",
+        "# set_property -dict { PACKAGE_PIN V13   IOSTANDARD LVCMOS33 } [get_ports { led[8] }];\n",
+        "# set_property -dict { PACKAGE_PIN V3    IOSTANDARD LVCMOS33 } [get_ports { led[9] }];\n",
+        "# set_property -dict { PACKAGE_PIN W3    IOSTANDARD LVCMOS33 } [get_ports { led[10] }];\n",
+        "# set_property -dict { PACKAGE_PIN U3    IOSTANDARD LVCMOS33 } [get_ports { led[11] }];\n",
+        "# set_property -dict { PACKAGE_PIN P3    IOSTANDARD LVCMOS33 } [get_ports { led[12] }];\n",
+        "# set_property -dict { PACKAGE_PIN N3    IOSTANDARD LVCMOS33 } [get_ports { led[13] }];\n",
+        "# set_property -dict { PACKAGE_PIN P1    IOSTANDARD LVCMOS33 } [get_ports { led[14] }];\n",
+        "# set_property -dict { PACKAGE_PIN L1    IOSTANDARD LVCMOS33 } [get_ports { led[15] }];\n"
+      ]
+    },
+    {% endif %}
+    {% if f4pga_exists %}
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "_toaZpwTui3E"
+      },
+      "source": [
+        "\n",
+        "## **Compiling with the F4PGA Toolchain**\n"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "IQd2K_jAwbFS"
+      },
+      "source": [
+        "### Installing the Toolchain\n",
+        "\n",
+        "Click play. This may take up to 4 minutes."
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "ZQFNmbQquBYV"
+      },
+      "outputs": [],
+      "source": [
+        "!apt install -y git wget xz-utils"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "rF1gehMvuC1L"
+      },
+      "outputs": [],
+      "source": [
+        "%%bash\n",
+        "cd /content\n",
+        "git clone https://github.com/chipsalliance/f4pga-examples\n",
+        "cd /content/f4pga-examples\n",
+        "time wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -O conda_installer.sh\n"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "4RV_Okw2uJYm"
+      },
+      "outputs": [],
+      "source": [
+        "#Creates the Conda Environment\n",
+        "%%bash\n",
+        "cd /content/f4pga-examples\n",
+        "export F4PGA_INSTALL_DIR=~/opt/f4pga\n",
+        "export FPGA_FAM=xc7\n",
+        "time bash conda_installer.sh -u -b -p $F4PGA_INSTALL_DIR/$FPGA_FAM/conda;\n",
+        "time source \"$F4PGA_INSTALL_DIR/$FPGA_FAM/conda/etc/profile.d/conda.sh\";\n",
+        "time conda env create -f $FPGA_FAM/environment.yml"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "FBqTs5CsuLb6"
+      },
+      "outputs": [],
+      "source": [
+        "#Download F4PGA Arch Defs\n",
+        "%%bash\n",
+        "export F4PGA_INSTALL_DIR=~/opt/f4pga\n",
+        "export FPGA_FAM=xc7\n",
+        "source \"$F4PGA_INSTALL_DIR/$FPGA_FAM/conda/etc/profile.d/conda.sh\";\n",
+        "conda activate xc7\n",
+        "mkdir -p $F4PGA_INSTALL_DIR/xc7/install\n",
+        "\n",
+        "F4PGA_TIMESTAMP='20220920-124259'\n",
+        "F4PGA_HASH='007d1c1'\n",
+        "export F4PGA_PACKAGES='install-xc7 xc7a50t_test'\n",
+        "\n",
+        "for PKG in $F4PGA_PACKAGES; do\n",
+        "  wget -qO- https://storage.googleapis.com/symbiflow-arch-defs/artifacts/prod/foss-fpga-tools/symbiflow-arch-defs/continuous/install/${F4PGA_TIMESTAMP}/symbiflow-arch-defs-${PKG}-${F4PGA_HASH}.tar.xz | tar -xJC $F4PGA_INSTALL_DIR/${FPGA_FAM}\n",
+        "done"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "EzO5bK_Awg2q"
+      },
+      "source": [
+        "### Compiling the Lab with the Toolchain\n",
+        "This should take up to 3 minutes"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "ZnnVzP55uSCL",
+        "outputId": "8838be0b-95b3-4836-a355-44a4777aa4a6"
+      },
+      "outputs": [
+        {
+          "ename": "",
+          "evalue": "",
+          "output_type": "error",
+          "traceback": [
+            "\u001b[1;31mRunning cells with 'Python 3.8.10 64-bit' requires ipykernel package.\n",
+            "\u001b[1;31mRun the following command to install 'ipykernel' into the Python environment. \n",
+            "\u001b[1;31mCommand: '/bin/python3 -m pip install ipykernel -U --user --force-reinstall'"
+          ]
+        }
+      ],
+      "source": [
+        "#This creates the Makefile\n",
+        "with open(\"/content/tmp_code/Makefile\", \"w\") as f:\n",
+        "  f.write(\"\"\"current_dir := ${CURDIR}\n",
+        "TARGET := basys3\n",
+        "\n",
+        "TOP := {{ top }}\n",
+        "\n",
+        "XDC := ${current_dir}/*.xdc\n",
+        "\n",
+        "SOURCES := ${current_dir}/{{ file }}.sv\n",
+        "\n",
+        "include /content/f4pga-examples/common/common.mk\n",
+        "\"\"\")"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "RmnDxe2MuPcG"
+      },
+      "outputs": [],
+      "source": [
+        "#Make the project\n",
+        "%%bash\n",
+        "export F4PGA_INSTALL_DIR=~/opt/f4pga\n",
+        "export FPGA_FAM=xc7\n",
+        "export TARGET=basys3\n",
+        "export FOLDER={{ folder }}\n",
+        "export FILES=\"{{ files }}\"\n",
+        "source \"$F4PGA_INSTALL_DIR/$FPGA_FAM/conda/etc/profile.d/conda.sh\";\n",
+        "mkdir /content/\"$FOLDER\"\n",
+        "cd /content/tmp_code\n",
+        "for file in $FILES\n",
+        "do\n",
+        "    mv \"$file\" /content/\"$FOLDER\"/\n",
+        "done\n",
+        "conda activate xc7\n",
+        "cd /content/$FOLDER\n",
+        "time make 2> ./error.log 1>./compile.log\n",
+        "if [ -f \"/content/$FOLDER/build/basys3/*.bit\" ]; then\n",
+        "    cp /content/$FOLDER/build/basys3/*.bit /content/$FOLDER.bit\n",
+        "else\n",
+        "    echo \"An Error has occurred and the bit stream has not been generated:\"\n",
+        "    cat ./compile.log\n",
+        "    cat ./error.log\n",
+        "fi"
+      ]
+    },
+    {% endif %}
+    {% if download_exists %}
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "jkKm3WaizMYC"
+      },
+      "source": [
+        "## **Testing it on the board**\n",
+        {% for sentence in download_body %}
+            "{{ sentence }}",
+        {% endfor %}
+        "{{ empty }}"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "cellView": "form",
+        "id": "1XrEe8VTuUdg"
+      },
+      "outputs": [],
+      "source": [
+        "#@title Create File for openocd\n",
+        "folder = \"{{ folder }}\"\n",
+        "\n",
+        "with open(f\"/content/{folder}.cfg\", \"w\") as f:\n",
+        "  f.write(\"\"\"interface ftdi\n",
+        "ftdi_device_desc \"Digilent USB Device\"\n",
+        "ftdi_vid_pid 0x0403 0x6010\n",
+        "# channel 1 does not have any functionality\n",
+        "ftdi_channel 0\n",
+        "# just TCK TDI TDO TMS, no reset\n",
+        "ftdi_layout_init 0x0088 0x008b\n",
+        "reset_config none\n",
+        "adapter_khz 10000\n",
+        "\n",
+        "source [find cpld/xilinx-xc7.cfg]\n",
+        "source [find cpld/jtagspi.cfg]\n",
+        "init\n",
+        "\n",
+        "puts [irscan xc7.tap 0x09]\n",
+        "\n",
+        "set xc7a35t \"0362D093\"\n",
+        "set xc7a100t \"13631093\"\n",
+        "set code [drscan xc7.tap 32 0]\n",
+        "puts $code\n",
+        "\n",
+        "if { $code == $xc7a35t} {\n",
+        "    puts \"The board has an xc7a35t\"\n",
+        "}\n",
+        "\n",
+        "if { $code == $xc7a100t} {\n",
+        "    puts \"The board has an xc7a100t\"\n",
+        "}\n",
+        "\"\"\"\n",
+        "+\n",
+        "\"\"\"\n",
+        "puts \"Programming...\"\n",
+        "pld load 0 {folder}.bit\n",
+        "exit\"\"\"\n",
+        ")"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "cellView": "form",
+        "id": "sA9d33SUkNdc"
+      },
+      "outputs": [],
+      "source": [
+        "#@title Create Zip\n",
+        "%%bash\n",
+        "cd /content\n",
+        "export FOLDER={{ folder }}\n",
+        "cp $FOLDER/build/basys3/*.bit ./\n",
+        "zip $FOLDER.zip *.bit $FOLDER.cfg\n"
+      ]
+    },
+    {% endif %}
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "aDr6FefGgJPg"
+      },
+      "source": [
+        "Click [Here](https://colab.research.google.com/github/byuccl/digital_design_colab2/blob/master/Exercises/{{ next_lesson }}/{{ next_lesson }}.ipynb) to move on to {{ next_lesson }}."
+      ]
+    }
+  ],
+  "metadata": {
+    "colab": {
+      "collapsed_sections": [
+        "SNHwhR5ed9Da",
+        "IQd2K_jAwbFS",
+        "EzO5bK_Awg2q"
+      ],
+      "provenance": []
+    },
+    "kernelspec": {
+      "display_name": "Python 3.9.15 64-bit",
+      "language": "python",
+      "name": "python3"
+    },
+    "language_info": {
+      "name": "python",
+      "version": "3.9.15"
+    },
+    "vscode": {
+      "interpreter": {
+        "hash": "f9f85f796d01129d0dd105a088854619f454435301f6ffec2fea96ecbd9be4ac"
+      }
+    }
+  },
+  "nbformat": 4,
+  "nbformat_minor": 0
+}
