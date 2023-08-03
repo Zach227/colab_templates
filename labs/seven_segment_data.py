@@ -15,12 +15,12 @@ In this lab, given a binary value, display the equivalent Hexadecimal character.
 So if we input `0000` we want to output `0` and if we input `1100` we want to output `A`.
         """,
     "part1_title": "",
-    "part1_body": r"""
-| Module Name: |seven_segment|||\n
-| ----------- | ----------- |--|--|\n
-| Port Name      | Direction       |Width|Function|\n
-| data\t|Input \t|4| data to display|\n
-|segment \t|Output \t|7 | Cathode signals to the display|\n
+    "part1_body": """
+| Module Name: |seven_segment|||
+| ----------- | ----------- |--|--|
+| Port Name      | Direction       |Width|Function|
+| data	|Input 	|4| data to display|
+|segment 	|Output 	|7 | Cathode signals to the display|
         """,
     "part1_wavedrom": True,
     "part1_testbench": True,
@@ -55,17 +55,19 @@ part 4 text goes here
     "part4_sim_file": "",
 
     "top_module_title": "The Top Module",
-    "top_module_body": r"""
-| Module Name: |seven_segment_top|||\n
-| ----------- | ----------- |--|--|\n
-| Port Name      | Direction       |Width|Function|\n
-| sw\t|Input \t|4| Input to drive seven-segment decoder |\n
-| btnc\t|Input \t|1| Will turn on digit point |\n
-| segment\t|Output \t|8 | Cathode signals to the display including the point|\n
-| anode\t|Output \t|4 | Anode signals for each of the four digits on the display|  \n
-        """
-        """
-"This figure shows what is happening in the module.\n\n
+    "top_module_body": """
+| Module Name: |seven_segment_top|||
+| ----------- | ----------- |--|--|
+| Port Name      | Direction       |Width|Function|
+| sw	|Input 	|4| Input to drive seven-segment decoder |
+| btnc	|Input 	|1| Will turn on digit point |
+| segment	|Output 	|8 | Cathode signals to the display including the point|
+| anode	|Output 	|4 | Anode signals for each of the four digits on the display|  
+
+<br>  
+This figure shows what is happening in the module. 
+<br>  <br>
+
 ![picture](https://raw.githubusercontent.com/anon36424/digital_design_colab/main/SevenSegment/media/seven_top.jpg)
         """,
     "top_module_wavedrom": False,
@@ -99,6 +101,7 @@ def get_data():
         if "body" in key:
             data[key]=data[key].replace('"', '\\"')
             data[key]=data[key].replace('\\s', '\\\\s')
+            data[key]=data[key].replace('\t', '\\t')
             data[key]=data[key].splitlines()
         if "questions" in key:
             for question in data[key]:

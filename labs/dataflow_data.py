@@ -46,12 +46,14 @@ If the button is not pressed, the LEDs should show the value of the switches.
     "part3_exists": True,
     "part3_title": "Function 3:",
     "part3_body": """
-Down button (btnr): Implement the following function while btnr is high:\n
-![picture](https://raw.githubusercontent.com/anon36424/digital_design_colab/main/Dataflow/media/function3.png)\n
-If btnr is low, then have the LED be equal to sw.
-NOTE: A will be the first switch, B the second and C the third. F will be the first LED\n
-Hint: `A = sw[0]`. You may also create intermediate signals if you prefer\n
-If the button is not pressed, the LEDs should show the value of the switches.
+Down button (btnr): Implement the following function while btnr is high:  
+![picture](https://raw.githubusercontent.com/anon36424/digital_design_colab/main/Dataflow/media/function3.png)
+
+If btnr is low, then have the LED be equal to sw. A will be the first switch, B the second and C the third. 
+F will be the first LED. If the button is not pressed, the LEDs should show the value of the switches.
+
+Hint: `A = sw[0]`. You may also create intermediate signals if you prefer
+
     """,
     "part3_wavedrom": True,
     "part3_testbench": True,
@@ -65,16 +67,20 @@ The door to the digital design lab has an electronic lock.
 When someone swipes their ID card, it could be a student or a professor. 
 If it is a student, and it is between 7am and 10pm, the door will unlock. 
 If it is a professor, the door will open no matter what time it is. 
-Implement this functionality when the up button is pressed.\n
+Implement this functionality when the up button is pressed.
+
 **Inputs:**\n
-Sw[0] - is student?  \n
-Sw[1] - is professor?  \n
-Sw[2] - 0 = am, 1 = pm  \n
-Sw[6:3] - binary representation of the hour of the day  \n
-**Output:**  \n
-If the door unlocks, turn on all LEDs\n\n
+Sw[0] - is student?  
+Sw[1] - is professor?  
+Sw[2] - 0 = am, 1 = pm  
+Sw[6:3] - binary representation of the hour of the day  
+
+**Output:**  
+If the door unlocks, turn on all LEDs
+
 **Note:** If the student input and the professor input are both high, the door should stay locked (this should not be possible—it is an imposter). 
-If you receive an invalid time (ex: 15:00am) the door should also stay locked.  \n
+If you receive an invalid time (ex: 15:00am) the door should also stay locked.
+
 If the button is not pressed, the LEDs should show the value of the switches.
     """,
     "part4_wavedrom": True,
@@ -83,53 +89,53 @@ If the button is not pressed, the LEDs should show the value of the switches.
 
     "top_module_title": "Bringing it together",
     "top_module_body": """
-Now add all of your functions together. 
-When a certain button is pressed it should implement that function. 
-When no button is pressed, it the leds should show the value of the switches.
+Now add all of your functions together. When a certain button is pressed it should implement that function. When no button is pressed, it the leds should show the value of the switches.
+
 You will just combine all of your functions together.
-The module should be called `dataflow_sv` and should have `sw` as a 16 bit wide inputs.
+
+The module should be called `dataflow_sv`
+It should have `sw` as a 16 bit wide inputs.
 It should have `btnl`, `btnd`, `btnr`, and `btnu` as single bit inputs.
-It should have `led` as a 16 bit wide output.\n
-You will have to rename and refactor some of your inputs. 
-For example, on Function 3, instead of having A, B, and C be inputs, you will need to assign them as intermediate signals:\n
-```\n
-assign A = sw[2];\n
-assign B = sw[1];\n
-assign C = sw[0];\n
-```\n\n
-This is because one input is mapped to one signal.\n\n
-You should use if/else branches to switch between your 4 functions.\n\n\n
-    """
-    r"""
-| Module Name: |dataflow_sv|||\n
-| ----------- | ----------- |--|--|\n
-| Port Name      | Direction       |Width|Function|\n
-|btnd \t|Input \t|1| Activates Function1\t|\n
-|btnl \t|Input \t|1| Activates Function2\t|\n
-|btnr \t|Input \t|1| Activates Function3\t|\n
-|btnu \t|Input \t|1| Activates Function4\t|\n
-|sw \t|Input \t|16 |\tThe value of the switches|\n
-|led| \tOutput \t|16| The value to display on the LEDs|
-    """,
+It should have `led` as a 16 bit wide output
+
+You will have to rename and refactor some of your inputs. For example, on Function 3, instead of having A, B, and C be inputs, you will need to assign them as intermediate signals:
+
+```
+assign A = sw[2];
+assign B = sw[1];
+assign C = sw[0];
+```
+
+This is because one input is mapped to one signal. You should use if/else if/else branches to switch between your 4 functions.
+
+| Module Name: |dataflow_sv|||
+| ----------- | ----------- |--|--|
+| Port Name      | Direction       |Width|Function|
+|btnd 	|Input 	|1| Activates Function1	|
+|btnl 	|Input 	|1| Activates Function2	|
+|btnr 	|Input 	|1| Activates Function3	|
+|btnu 	|Input 	|1| Activates Function4	|
+|sw 	|Input 	|16 |	The value of the switches|
+|led| 	Output 	|16| The value to display on the LEDs|
+""",
     "top_module_text2": True,
     "top_module_text2_type": "code",
     "top_module_title2": "Hint",
     "top_module_body2":
     """
-%%html\n
-\n
-<style>\n
-div.warn {\n
-    color: #356A89;\n
-    background-color: #D4EAF7;\n
-    border-left: 5px solid #3C82E3;\n
-    padding: 0.5em;\n
-    }\n
-</style>\n
-<div class=warn>\n
-The module should be called dataflow. It should have sw as a 16 bit wide inputs. <br>
-It should have btnl, btnd, btnr, and btnu as single bit inputs. 
-It should have led as a 16 bit wide output.\n
+%%html
+
+<style>
+div.warn {    
+    color: #356A89;
+    background-color: #D4EAF7;
+    border-left: 5px solid #3C82E3;
+    padding: 0.5em;
+    }
+ </style>
+<div class=warn>
+The module should be called dataflow. It should have sw as a 16 bit wide inputs. <br> 
+It should have btnl, btnd, btnr, and btnu as single bit inputs. It should have led as a 16 bit wide output.
 </div>
     """,
     "top_module_wavedrom": False,
@@ -177,6 +183,7 @@ def get_data():
         if "body" in key:
             data[key]=data[key].replace('"', '\\"')
             data[key]=data[key].replace('\\s', '\\\\s')
+            data[key]=data[key].replace('\t', '\\t')
             data[key]=data[key].splitlines()
         if "questions" in key:
             for question in data[key]:
