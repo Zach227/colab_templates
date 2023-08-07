@@ -111,7 +111,6 @@ text goes here
 
     "top_module_title": "Top Level Module",
     "top_module_body": """
-    # Top Level Module
 | Module Name: | stopwatch_top|||
 | -- --------- | ----------- |--|--|
 | Port Name      | Direction       |Width|Function|
@@ -142,11 +141,18 @@ NOTE: We are giving you the Seven Segement Control Module. This allows you to sh
     "top_module_testbench": False,
     "top_module_sim_file": "stopwatch_top",
 
-    "xdc_exists": False,
-    "xdc_title": "",
+    "xdc_exists": True,
+    "xdc_title": "XDC File",
     "xdc_body":
     """
-text goes here
+In the xdc file below, uncomment the lines corresponding to the FPGA I/O that you are using. You will also need to add 2 lines at the top for the clock.
+```
+# Clock
+set_property -dict { PACKAGE_PIN W5    IOSTANDARD LVCMOS33 } [get_ports { clk }];
+create_clock -period 10.00 [get_ports {clk}];
+
+```
+Then run the code block to create your xdc file.
         """,
 
     "f4pga_exists": True,
@@ -169,15 +175,8 @@ def get_data():
         if "body" in key:
             data[key]=data[key].replace('"', '\\"')
             data[key]=data[key].replace('\\s', '\\\\s')
+            data[key]=data[key].replace('\n', '\\n')
             data[key]=data[key].replace('\t', '\\t')
             data[key]=data[key].replace('\frac', '\\\\frac')
             data[key]=data[key].splitlines()
-        if "questions" in key:
-            for question in data[key]:
-                i = 0
-                for line in question.title:
-                    line=line.replace('"', '\\"')
-                    question.title[i] = line
-                    i+=1
     return data
-

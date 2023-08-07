@@ -24,7 +24,6 @@
         "cellView": "form",
         "id": "9coZGYriFDAb"
       },
-      "outputs": [],
       "source": [
         "#@title Setup\n",
         "!cd /content\n",
@@ -63,7 +62,7 @@
         "id": "aM9GnrFnlImY"
       },
       "source": [
-        "## {{ intro_title }}\n",
+        "## **{{ intro_title }}**\n",
         {% for sentence in intro_body %}
           "{{ sentence }}",
         {% endfor %}
@@ -76,7 +75,7 @@
         "id": "Q1Kd2xpYqUfL"
       },
       "source": [
-        "### {{ part1_title }}\n",
+        "## **{{ part1_title }}**\n",
         {% for sentence in part1_body %}
             "{{ sentence }}",
         {% endfor %}
@@ -90,7 +89,6 @@
         "cellView": "form",
         "id": "nMT-jR_7tBxu"
       },
-      "outputs": [],
       "source": [
         "#@title Launch Simulation Workspace\n",
         "createSimulationWorkSpace(\"tmp_code/{{ part1_sim_file }}\")"
@@ -104,7 +102,6 @@
         "cellView": "form",
         "id": "LsBCxFSVBFCB"
       },
-      "outputs": [],
       "source": [
         "#@title Create WaveDrom\n",
         "df2wd(\"{{ part1_sim_file }}\")"
@@ -117,7 +114,6 @@
         "cellView": "form",
         "id": "Nf4o3jwNA86t"
       },
-      "outputs": [],
       "source": [
         "#@title Show WaveDrom\n",
         "%%wavedrom_magic -h 200 -o /content/tmp_code/{{ part1_sim_file }}.txt\n",
@@ -133,7 +129,6 @@
         "cellView": "form",
         "id": "FpOHuLeJe6IC"
       },
-      "outputs": [],
       "source": [
         "#@title Verilator TestBench\n",
         "!verilator --cc {{ part1_sim_file }}.sv\n",
@@ -150,7 +145,7 @@
         "id": "Q1Kd2xpYqUfL"
       },
       "source": [
-        "### {{ part2_title }}\n",
+        "## **{{ part2_title }}**\n",
         {% for sentence in part2_body %}
             "{{ sentence }}",
         {% endfor %}
@@ -164,7 +159,6 @@
         "cellView": "form",
         "id": "nMT-jR_7tBxu"
       },
-      "outputs": [],
       "source": [
         "#@title Launch Simulation Workspace\n",
         "createSimulationWorkSpace(\"tmp_code/{{ part2_sim_file }}\")"
@@ -178,7 +172,6 @@
         "cellView": "form",
         "id": "LsBCxFSVBFCB"
       },
-      "outputs": [],
       "source": [
         "#@title Create WaveDrom\n",
         "df2wd(\"{{ part2_sim_file }}\")"
@@ -191,7 +184,6 @@
         "cellView": "form",
         "id": "Nf4o3jwNA86t"
       },
-      "outputs": [],
       "source": [
         "#@title Show WaveDrom\n",
         "%%wavedrom_magic -h 200 -o /content/tmp_code/{{ part2_sim_file }}.txt\n",
@@ -207,7 +199,6 @@
         "cellView": "form",
         "id": "FpOHuLeJe6IC"
       },
-      "outputs": [],
       "source": [
         "#@title Verilator TestBench\n",
         "!verilator --cc {{ part2_sim_file }}.sv\n",
@@ -225,7 +216,7 @@
       "id": "Q1Kd2xpYqUfL"
       },
       "source": [
-        "### {{ part3_title }}\n",
+        "## **{{ part3_title }}**\n",
         {% for sentence in part3_body %}
             "{{ sentence }}",
         {% endfor %}
@@ -239,7 +230,6 @@
         "cellView": "form",
         "id": "nMT-jR_7tBxu"
       },
-      "outputs": [],
       "source": [
         "#@title Launch Simulation Workspace\n",
         "createSimulationWorkSpace(\"tmp_code/{{ part3_sim_file }}\")"
@@ -253,7 +243,6 @@
         "cellView": "form",
         "id": "LsBCxFSVBFCB"
       },
-      "outputs": [],
       "source": [
         "#@title Create WaveDrom\n",
         "df2wd(\"{{ part3_sim_file }}\")"
@@ -266,7 +255,6 @@
         "cellView": "form",
         "id": "Nf4o3jwNA86t"
       },
-      "outputs": [],
       "source": [
         "#@title Show WaveDrom\n",
         "%%wavedrom_magic -h 200 -o /content/tmp_code/{{ part3_sim_file }}.txt\n",
@@ -282,7 +270,6 @@
         "cellView": "form",
         "id": "FpOHuLeJe6IC"
       },
-      "outputs": [],
       "source": [
         "#@title Verilator TestBench\n",
         "!verilator --cc {{ part3_sim_file }}.sv\n",
@@ -300,7 +287,7 @@
       "id": "Q1Kd2xpYqUfL"
       },
       "source": [
-        "### {{ part4_title }}\n",
+        "## **{{ part4_title }}**\n",
         {% for sentence in part4_body %}
             "{{ sentence }}",
         {% endfor %}
@@ -314,7 +301,6 @@
         "cellView": "form",
         "id": "nMT-jR_7tBxu"
       },
-      "outputs": [],
       "source": [
         "#@title Launch Simulation Workspace\n",
         "createSimulationWorkSpace(\"tmp_code/{{ part4_sim_file }}\")"
@@ -328,7 +314,6 @@
         "cellView": "form",
         "id": "LsBCxFSVBFCB"
       },
-      "outputs": [],
       "source": [
         "#@title Create WaveDrom\n",
         "df2wd(\"{{ part4_sim_file }}\")"
@@ -341,7 +326,6 @@
         "cellView": "form",
         "id": "Nf4o3jwNA86t"
       },
-      "outputs": [],
       "source": [
         "#@title Show WaveDrom\n",
         "%%wavedrom_magic -h 200 -o /content/tmp_code/{{ part4_sim_file }}.txt\n",
@@ -357,7 +341,6 @@
         "cellView": "form",
         "id": "FpOHuLeJe6IC"
       },
-      "outputs": [],
       "source": [
         "#@title Verilator TestBench\n",
         "!verilator --cc {{ part4_sim_file }}.sv\n",
@@ -374,7 +357,7 @@
       "id": "Q1Kd2xpYqUfL"
       },
       "source": [
-        "### {{ top_module_title }}\n",
+        "## **{{ top_module_title }}**\n",
         {% for sentence in top_module_body %}
             "{{ sentence }}",
         {% endfor %}
@@ -403,7 +386,6 @@
         "cellView": "form",
         "id": "nMT-jR_7tBxu"
       },
-      "outputs": [],
       "source": [
         "#@title Launch Simulation Workspace\n",
         "createSimulationWorkSpace(\"tmp_code/{{ top_module_sim_file }}\")"
@@ -417,7 +399,6 @@
         "cellView": "form",
         "id": "LsBCxFSVBFCB"
       },
-      "outputs": [],
       "source": [
         "#@title Create WaveDrom\n",
         "df2wd(\"{{ top_module_sim_file }}\")"
@@ -430,7 +411,6 @@
         "cellView": "form",
         "id": "Nf4o3jwNA86t"
       },
-      "outputs": [],
       "source": [
         "#@title Show WaveDrom\n",
         "%%wavedrom_magic -h 200 -o /content/tmp_code/{{ top_module_sim_file }}.txt\n",
@@ -446,7 +426,6 @@
         "cellView": "form",
         "id": "FpOHuLeJe6IC"
       },
-      "outputs": [],
       "source": [
         "#@title Verilator TestBench\n",
         "!verilator --cc {{ top_module_sim_file }}.sv\n",
@@ -463,7 +442,7 @@
         "id": "BoUoInjG-U4q"
       },
       "source": [
-        "### {{ xdc_title }}\n",
+        "## **{{ xdc_title }}**\n",
         {% for sentence in xdc_body %}
             "{{ sentence }}",
         {% endfor %}
@@ -477,7 +456,6 @@
         "cellView": "form",
         "id": "LK5-Msjq05GW"
       },
-      "outputs": [],
       "source": [
         "#@title Generate an XDC File\n",
         "%%bash -c 'cat > /content/tmp_code/xdc.xdc'\n",
@@ -555,8 +533,8 @@
       "metadata": {
         "id": "ZQFNmbQquBYV"
       },
-      "outputs": [],
       "source": [
+        "#@title Install Dependencies\n",
         "!apt install -y git wget xz-utils"
       ]
     },
@@ -566,8 +544,8 @@
       "metadata": {
         "id": "rF1gehMvuC1L"
       },
-      "outputs": [],
       "source": [
+        "#@title Clone Repo\n",
         "%%bash\n",
         "cd /content\n",
         "git clone https://github.com/chipsalliance/f4pga-examples\n",
@@ -581,9 +559,8 @@
       "metadata": {
         "id": "4RV_Okw2uJYm"
       },
-      "outputs": [],
       "source": [
-        "#Creates the Conda Environment\n",
+        "#@title Creates the Conda Environment\n",
         "%%bash\n",
         "cd /content/f4pga-examples\n",
         "export F4PGA_INSTALL_DIR=~/opt/f4pga\n",
@@ -599,9 +576,8 @@
       "metadata": {
         "id": "FBqTs5CsuLb6"
       },
-      "outputs": [],
       "source": [
-        "#Download F4PGA Arch Defs\n",
+        "#@title Download F4PGA Arch Defs\n",
         "%%bash\n",
         "export F4PGA_INSTALL_DIR=~/opt/f4pga\n",
         "export FPGA_FAM=xc7\n",
@@ -635,20 +611,8 @@
         "id": "ZnnVzP55uSCL",
         "outputId": "8838be0b-95b3-4836-a355-44a4777aa4a6"
       },
-      "outputs": [
-        {
-          "ename": "",
-          "evalue": "",
-          "output_type": "error",
-          "traceback": [
-            "\u001b[1;31mRunning cells with 'Python 3.8.10 64-bit' requires ipykernel package.\n",
-            "\u001b[1;31mRun the following command to install 'ipykernel' into the Python environment. \n",
-            "\u001b[1;31mCommand: '/bin/python3 -m pip install ipykernel -U --user --force-reinstall'"
-          ]
-        }
-      ],
       "source": [
-        "#This creates the Makefile\n",
+        "#@title Create Makefile\n",
         "with open(\"/content/tmp_code/Makefile\", \"w\") as f:\n",
         "  f.write(\"\"\"current_dir := ${CURDIR}\n",
         "TARGET := basys3\n",
@@ -657,7 +621,7 @@
         "\n",
         "XDC := ${current_dir}/*.xdc\n",
         "\n",
-        "SOURCES := ${current_dir}/{{ file }}.sv\n",
+        "SOURCES := $(wildcard ${current_dir}/*.v ${current_dir}/*.sv)\n",
         "\n",
         "include /content/f4pga-examples/common/common.mk\n",
         "\"\"\")"
@@ -669,9 +633,8 @@
       "metadata": {
         "id": "RmnDxe2MuPcG"
       },
-      "outputs": [],
       "source": [
-        "#Make the project\n",
+        "#@title Make the project\n",
         "%%bash\n",
         "export F4PGA_INSTALL_DIR=~/opt/f4pga\n",
         "export FPGA_FAM=xc7\n",
@@ -719,7 +682,6 @@
         "cellView": "form",
         "id": "1XrEe8VTuUdg"
       },
-      "outputs": [],
       "source": [
         "#@title Create File for openocd\n",
         "folder = \"{{ folder }}\"\n",
@@ -769,7 +731,6 @@
         "cellView": "form",
         "id": "sA9d33SUkNdc"
       },
-      "outputs": [],
       "source": [
         "#@title Create Zip\n",
         "%%bash\n",

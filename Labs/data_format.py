@@ -83,15 +83,8 @@ def get_data():
         if "body" in key:
             data[key]=data[key].replace('"', '\\"')
             data[key]=data[key].replace('\\s', '\\\\s')
+            data[key]=data[key].replace('\n', '\\n')
             data[key]=data[key].replace('\t', '\\t')
             data[key]=data[key].replace('\frac', '\\\\frac')
             data[key]=data[key].splitlines()
-        if "questions" in key:
-            for question in data[key]:
-                i = 0
-                for line in question.title:
-                    line=line.replace('"', '\\"')
-                    question.title[i] = line
-                    i+=1
     return data
-

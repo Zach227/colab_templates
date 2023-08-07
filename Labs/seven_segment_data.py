@@ -8,13 +8,13 @@ class Question:
 
 
 data = {
-    "notebook_dir": "",
-    "intro_title": "Seven Segment Module",
+    "notebook_dir": "seven_segment_lab",
+    "intro_title": "The Lab",
     "intro_body": """
 In this lab, given a binary value, display the equivalent Hexadecimal character.
 So if we input `0000` we want to output `0` and if we input `1100` we want to output `A`.
         """,
-    "part1_title": "",
+    "part1_title": "Seven Segment Module",
     "part1_body": """
 | Module Name: |seven_segment|||
 | ----------- | ----------- |--|--|
@@ -72,13 +72,13 @@ This figure shows what is happening in the module.
         """,
     "top_module_wavedrom": False,
     "top_module_testbench": False,
-    "top_module_sim_file": "",
+    "top_module_sim_file": "seven_segment_top",
 
     "xdc_exists": True,
     "xdc_title": "XDC File",
     "xdc_body":
     """
-You will need to uncomment the lines corresponding to the FPGA I/O that you are using.
+In the xdc file below, uncomment the lines corresponding to the FPGA I/O that you are using. Then run the code block to create your xdc file.
         """,
 
     "f4pga_exists": True,
@@ -101,14 +101,8 @@ def get_data():
         if "body" in key:
             data[key]=data[key].replace('"', '\\"')
             data[key]=data[key].replace('\\s', '\\\\s')
+            data[key]=data[key].replace('\n', '\\n')
             data[key]=data[key].replace('\t', '\\t')
+            data[key]=data[key].replace('\frac', '\\\\frac')
             data[key]=data[key].splitlines()
-        if "questions" in key:
-            for question in data[key]:
-                i = 0
-                for line in question.title:
-                    line=line.replace('"', '\\"')
-                    question.title[i] = line
-                    i+=1
     return data
-
