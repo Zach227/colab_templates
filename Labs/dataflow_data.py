@@ -19,6 +19,8 @@ If no button is pressed, the LEDs should show which switches are flipped.
 Each function will take the input (switches) and change it. 
 This will be displayed on the LEDs.
     """,
+
+    "part1_exists": True,
     "part1_title": "Function 1:",
     "part1_body": """
 Down Button (btnd): Shift all the bits of the input to the left 3 times when you press the down button.

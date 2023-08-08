@@ -14,6 +14,8 @@ data = {
 In this lab, given a binary value, display the equivalent Hexadecimal character.
 So if we input `0000` we want to output `0` and if we input `1100` we want to output `A`.
         """,
+
+    "part1_exists": True,
     "part1_title": "Seven Segment Module",
     "part1_body": """
 | Module Name: |seven_segment|||

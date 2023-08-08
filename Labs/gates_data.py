@@ -88,6 +88,8 @@ logic output2;
 And then you can use these signals as outputs in the AND gates, and inputs in the OR gate. 
 
         """,
+
+    "part1_exists": True,
     "part1_title": "Task 1",
     "part1_body": """
 The first thing you will do is implement the following circuit in system verilog.

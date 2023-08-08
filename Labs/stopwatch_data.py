@@ -33,6 +33,8 @@ Timing is very important because of the FPGAs built in clock. The clock keeps al
 
 In this lab, inorder to create a stopwatch, you will need to know how many clock cycles occur in a given time frame, then after counting that many, increment the stopwatch.
         """,
+
+    "part1_exists": True,
     "part1_title": "The Counter Module",
     "part1_body": """
 <img src="https://raw.githubusercontent.com/byuccl/digital_design_colab/master/Labs/stopwatch_lab/media/mod_counter.png"

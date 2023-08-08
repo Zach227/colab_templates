@@ -13,6 +13,8 @@ data = {
     "intro_body": """
 text goes here
         """,
+
+    "part1_exists": True,
     "part1_title": "",
     "part1_body": """
 text goes here

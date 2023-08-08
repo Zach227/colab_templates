@@ -11,6 +11,8 @@ data = {
     "notebook_dir": "arithmetic_lab",
     "intro_title": "The Lab",
     "intro_body": "",
+
+    "part1_exists": True,
     "part1_title": "Full Adder",
     "part1_body": """
 The first building block of your Circuit will be the full adder.  
