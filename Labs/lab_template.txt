@@ -69,6 +69,7 @@
         "{{ empty }}"
       ]
     },
+    {% if part1_exists %}
     {
       "cell_type": "markdown",
       "metadata": {
@@ -137,6 +138,7 @@
         "!./obj_dir/V{{ part1_sim_file }}"
       ]
     },
+    {% endif %}
     {% endif %}
     {% if part2_exists %}
     {

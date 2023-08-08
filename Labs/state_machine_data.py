@@ -8,7 +8,7 @@ class Question:
 
 
 data = {
-    "notebook_dir": "",
+    "notebook_dir": "state_machine_lab",
     "intro_title": "One Shot",
     "intro_body": """
 One large problem when dealing with inputs is that they are read every single cycle.
@@ -26,13 +26,13 @@ ONESHOT: Input received, out is high for one cycle. Goes to WAIT.
 
 WAIT: Waits for the input to go low. Out is low. When out goes to low, transitions to IDLE.
 
-| Module Name: | OneShot |||\n
-| -- --------- | ----------- |--|--|\n
-| Port Name      | Direction       |Width|Function|\n
-| reset \t|Input \t|1| Active high reset|\n
-| in \t|Input \t|1| Signal to One Shot|\n
-| out |Output |1| One Shot signal|\n
-| clk \t|Input \t|1| Clock Signal |\n
+| Module Name: | OneShot |||
+| -- --------- | ----------- |--|--|
+| Port Name      | Direction       |Width|Function|
+| reset \t|Input \t|1| Active high reset|
+| in \t|Input \t|1| Signal to One Shot|
+| out |Output |1| One Shot signal|
+| clk \t|Input \t|1| Clock Signal |
         """,
 
     "part1_exists": False,
@@ -100,18 +100,18 @@ COMBINATION_THREE: IF Q is low, nothing happens. If Q is High and Code is high, 
 
 OPEN: After the 3 codes have been entered, the safe will 'open' and show an LED code. If BTNC is pressed the safe will go back to IDLE state.
 
-| Module Name: | State Machine |||\n
-| -- --------- | ----------- |--|--|\n
-| Port Name      | Direction       |Width|Function|\n
-|reset \t|Input \t|1| Active high reset|\n
-|clk \t|Input \t|1| Clock used for timing|\n
-|btnu \t|Input \t|1| Button Up|\n
-|btnd \t|Input \t|1| Button Down|\n
-|btnc \t|Input \t|1| Button Center|\n
-|btnl \t|Input \t|1| Button Left|\n
-|btnr \t|Input \t|1| Button Right|\n
-|sw \t|Input \t|16 | Input used for the code|\n
-| led | Output | 16 | Output for the State Machine |\n
+| Module Name: | State Machine |||
+| -- --------- | ----------- |--|--|
+| Port Name      | Direction       |Width|Function|
+|reset \t|Input \t|1| Active high reset|
+|clk \t|Input \t|1| Clock used for timing|
+|btnu \t|Input \t|1| Button Up|
+|btnd \t|Input \t|1| Button Down|
+|btnc \t|Input \t|1| Button Center|
+|btnl \t|Input \t|1| Button Left|
+|btnr \t|Input \t|1| Button Right|
+|sw \t|Input \t|16 | Input used for the code|
+| led | Output | 16 | Output for the State Machine |
 
 Specifications:
 
@@ -129,9 +129,10 @@ Combination 3: btnc and sw = `16'b0100101010100111`
     "top_module_sim_file": "statemachine",
 
     "xdc_exists": True,
-    "xdc_title": "",
+    "xdc_title": "XDC File",
     "xdc_body":
     """
+In the xdc file below, uncomment the lines corresponding to the FPGA I/O that you are using. Then run the code block to create your xdc file.
         """,
 
     "f4pga_exists": True,
